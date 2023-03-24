@@ -108,6 +108,7 @@ const UserProfilePage = () => {
       <button onClick={handleSubmit} className="user-profile__submit">
         Submit
       </button>
+      <button onClick={()=>{navigate('/')}} className="user-profile__back">Go back</button>
     </div>
   );
 };
