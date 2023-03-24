@@ -4,6 +4,7 @@ import { boundUserActions } from 'src/store/actions/userActions';
 
 const UserProfilePage = () => {
   const selectedUser = useTypedSelector((state) => state.user.selectedUser);
+  console.log('')
 
   const [name, setName] = useState(selectedUser?.name || '');
   const [email, setEmail] = useState(selectedUser?.email || '');
