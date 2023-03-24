@@ -1,12 +1,12 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import Table from './components/Table';
 import { useSearchParams } from 'react-router-dom';
 import DeleteDialog from './components/DeleteDialog';
 import { boundUserActions } from 'src/store/actions/userActions';
 import { useNavigate } from 'react-router-dom';
-import './style.scss';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useUserMutation } from 'src/hooks/useUser';
+import './style.scss';
 
 const MainPage = () => {
   const navigate = useNavigate();
