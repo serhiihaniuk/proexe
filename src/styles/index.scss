@@ -1,12 +1,16 @@
 @use "variables";
 @use "global";
 
+table {
+  border: 1px solid lightgray;
+}
 
-.main {
-  min-width: 100%;
-  min-height: 200px;
-  background: url("../assets/images/main.png") no-repeat center;
-  background-size: contain;
-  margin: 0 auto;
+tbody {
+  border-bottom: 1px solid lightgray;
+}
 
+th {
+  border-bottom: 1px solid lightgray;
+  border-right: 1px solid lightgray;
+  padding: 2px 4px;
 }
