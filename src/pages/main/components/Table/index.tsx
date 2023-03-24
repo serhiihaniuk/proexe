@@ -5,22 +5,15 @@ import { FC } from 'react';
 type TableProps = {
   tableData: User[];
   onDelete: (id: number) => void;
+  onEdit: (user: User) => void;
 };
 
-const Table: FC<TableProps> = ({ tableData, onDelete }) => {
+const Table: FC<TableProps> = ({ tableData, onDelete, onEdit }) => {
   const table = useReactTable({
     data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel()
   });
-
-  function editHandler(user: User) {
-    console.log(user);
-  }
-
-  function deleteHandler(id: number) {
-    onDelete(id);
-  }
 
   return (
     <div className="p-2">
@@ -45,8 +38,8 @@ const Table: FC<TableProps> = ({ tableData, onDelete }) => {
                 <td key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, {
                     ...cell.getContext(),
-                    edit: () => editHandler(row.original),
-                    delete: () => deleteHandler(row.original.id)
+                    edit: () => onEdit(row.original),
+                    delete: () => onDelete(row.original.id)
                   })}
                 </td>
               ))}
