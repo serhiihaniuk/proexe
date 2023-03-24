@@ -4,7 +4,7 @@ import { boundUserActions } from 'src/store/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import './style.scss';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
-import { useUserMutation } from 'src/hooks/useUser';
+import { useUserMutation } from 'src/hooks/useUserMutation';
 
 const useUserProfileForm = (selectedUser?: User) => {
   const [name, setName] = useState(selectedUser?.name || '');

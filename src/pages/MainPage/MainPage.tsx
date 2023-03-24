@@ -5,7 +5,7 @@ import DeleteDialog from './components/DeleteDialog';
 import { boundUserActions } from 'src/store/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
-import { useUserMutation } from 'src/hooks/useUser';
+import { useUserMutation } from 'src/hooks/useUserMutation';
 import './style.scss';
 
 const MainPage = () => {
