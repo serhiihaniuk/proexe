@@ -18,20 +18,11 @@ type UnsetUserAction = {
 
 export type UserActions = SetUserAction | UnsetUserAction
 
-const setUser = (payload: User): SetUserAction => ({
+export const setUser = (payload: User): SetUserAction => ({
   type: USER_ACTIONS.SET_USER,
   payload: payload
 });
 
-const unsetUser = (): UnsetUserAction => ({
+export const unsetUser = (): UnsetUserAction => ({
   type: USER_ACTIONS.UNSET_USER
 });
-
-
-export const boundUserActions = bindActionCreators(
-  {
-    set: setUser,
-    unset: unsetUser
-  },
-  store.dispatch
-);

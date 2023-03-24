@@ -2,10 +2,10 @@ import { useCallback } from 'react';
 import Table from './components/Table';
 import { useSearchParams } from 'react-router-dom';
 import DeleteDialog from './components/DeleteDialog';
-import { boundUserActions } from 'src/store/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useUserMutation } from 'src/hooks/useUserMutation';
+import { boundUserActions } from 'src/store';
 import './style.scss';
 
 const MainPage = () => {

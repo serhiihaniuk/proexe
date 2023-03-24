@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
-import { boundUserActions } from 'src/store/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import './style.scss';
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import { useUserMutation } from 'src/hooks/useUserMutation';
+import { boundUserActions } from 'src/store';
 
 const useUserProfileForm = (selectedUser?: User) => {
   const [name, setName] = useState(selectedUser?.name || '');
