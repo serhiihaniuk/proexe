@@ -17,15 +17,6 @@ const useUserQuery = () => {
   });
 };
 
-const useUserUpdateMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(userAPI.updateUser, {
-    onSuccess: (u) => {
-      userAPI.updateUserCacheHandler(u, queryClient);
-    }
-  });
-};
-
 const useUserDeleteMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(userAPI.deleteUser, {
@@ -42,7 +33,6 @@ const MainPage: React.FC<Record<string, string>> = () => {
   const isDeleteDialogOpen = Boolean(userID);
 
   const { data: userData } = useUserQuery();
-  const { mutate: updateUser } = useUserUpdateMutation();
   const { mutate: deleteUser, isLoading } = useUserDeleteMutation();
 
   const onDelete = useCallback(

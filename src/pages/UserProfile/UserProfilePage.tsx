@@ -1,18 +1,35 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { boundUserActions } from 'src/store/actions/userActions';
+import userAPI from 'src/services/api';
+import { useNavigate } from 'react-router-dom';
+
+const useUserUpdateMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation(userAPI.updateUser, {
+    onSuccess: (u) => {
+      userAPI.updateUserCacheHandler(u, queryClient);
+    }
+  });
+};
 
 const UserProfilePage = () => {
+  const navigate = useNavigate();
+
   const selectedUser = useTypedSelector((state) => state.user.selectedUser);
-  console.log('1')
+  const isEditing = Boolean(selectedUser);
 
   const [name, setName] = useState(selectedUser?.name || '');
   const [email, setEmail] = useState(selectedUser?.email || '');
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
 
+  const { mutate: updateUser } = useUserUpdateMutation();
+
   const handleSubmit = () => {
     let valid = true;
+    debugger;
 
     if (!name) {
       setNameError(true);
@@ -27,13 +44,18 @@ const UserProfilePage = () => {
     } else {
       setEmailError(false);
     }
-
+    debugger;
     if (valid) {
-      setName('');
-      setEmail('');
+      if (selectedUser) {
+        selectedUser.name = name;
+        selectedUser.email = email;
+        updateUser(selectedUser);
+
+        navigate('');
+      }
     }
   };
-  
+
   useEffect(() => {
     return () => {
       boundUserActions.unset();
@@ -64,6 +86,7 @@ const UserProfilePage = () => {
         />
         {emailError && <p>Please enter a valid email address.</p>}
       </div>
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };
