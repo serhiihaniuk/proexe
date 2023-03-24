@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import UserProfilePage from 'src/pages/UserProfile/UserProfilePage';
-import MainPage from 'src/pages/main/MainPage';
+import MainPage from 'src/pages/Main/MainPage';
 
 const AppRouter = () => {
   return (
