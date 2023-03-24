@@ -1,12 +1,12 @@
 interface User {
   id:       number;
   name:     string;
-  username: string;
+  username?: string;
   email:    string;
-  address:  Address;
-  phone:    string;
-  website:  string;
-  company:  Company;
+  address?:  Address;
+  phone?:    string;
+  website?:  string;
+  company?:  Company;
 }
 
 interface Address {

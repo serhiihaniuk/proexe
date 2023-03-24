@@ -1,37 +1,21 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useTypedSelector } from 'src/hooks/useTypedSelector';
 import { boundUserActions } from 'src/store/actions/userActions';
-import userAPI from 'src/services/api';
 import { useNavigate } from 'react-router-dom';
+import './style.scss';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
+import { useUserMutation } from 'src/hooks/useUser';
 
-const useUserUpdateMutation = () => {
-  const queryClient = useQueryClient();
-  return useMutation(userAPI.updateUser, {
-    onSuccess: (u) => {
-      userAPI.updateUserCacheHandler(u, queryClient);
-    }
-  });
-};
-
-const UserProfilePage = () => {
-  const navigate = useNavigate();
-
-  const selectedUser = useTypedSelector((state) => state.user.selectedUser);
-  const isEditing = Boolean(selectedUser);
-
+const useUserProfileForm = (selectedUser?: User) => {
   const [name, setName] = useState(selectedUser?.name || '');
   const [email, setEmail] = useState(selectedUser?.email || '');
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
 
-  const { mutate: updateUser } = useUserUpdateMutation();
-
-  const handleSubmit = () => {
+  const validateForm = () => {
     let valid = true;
-    debugger;
 
-    if (!name) {
+    if (!name.trim()) {
       setNameError(true);
       valid = false;
     } else {
@@ -44,15 +28,42 @@ const UserProfilePage = () => {
     } else {
       setEmailError(false);
     }
-    debugger;
-    if (valid) {
-      if (selectedUser) {
-        selectedUser.name = name;
-        selectedUser.email = email;
-        updateUser(selectedUser);
 
-        navigate('');
+    return valid;
+  };
+
+  return {
+    name,
+    setName,
+    email,
+    setEmail,
+    nameError,
+    setNameError,
+    emailError,
+    setEmailError,
+    validateForm
+  };
+};
+
+const UserProfilePage = () => {
+  const navigate = useNavigate();
+  const selectedUser = useTypedSelector((state) => state.user.selectedUser);
+  const { name, setName, email, setEmail, nameError, emailError, validateForm } =
+    useUserProfileForm(selectedUser);
+
+  const { updateUser, addUser } = useUserMutation();
+
+  const handleSubmit = async () => {
+    if (validateForm()) {
+      const user = selectedUser ? { ...selectedUser, name, email } : ({ name, email } as User);
+
+      if (selectedUser) {
+        await updateUser.mutateAsync(user);
+      } else {
+        await addUser.mutateAsync(user);
       }
+
+      navigate('/');
     }
   };
 
@@ -62,31 +73,41 @@ const UserProfilePage = () => {
     };
   }, []);
 
+  if (updateUser.isLoading || addUser.isLoading) return <LoadingSpinner />;
+
   return (
-    <div>
-      <div>
-        <label htmlFor="name">Name</label>
+    <div className="user-profile">
+      <div className="user-profile__field">
+        <label htmlFor="name" className="user-profile__label">
+          Name
+        </label>
         <input
           type="text"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          className="user-profile__input"
         />
-        {nameError && <p>Please enter a valid name.</p>}
+        {nameError && <p className="user-profile__error">Please enter a valid name.</p>}
       </div>
-      <div>
-        <label htmlFor="email">Email</label>
+      <div className="user-profile__field">
+        <label htmlFor="email" className="user-profile__label">
+          Email
+        </label>
         <input
           type="email"
           id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="user-profile__input"
         />
-        {emailError && <p>Please enter a valid email address.</p>}
+        {emailError && <p className="user-profile__error">Please enter a valid email address.</p>}
       </div>
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit} className="user-profile__submit">
+        Submit
+      </button>
     </div>
   );
 };

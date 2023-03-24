@@ -1,5 +1,6 @@
-import ModalWindow from '@components/ModalWindow/ModalWindow';
 import React, { FC } from 'react';
+import ModalWindow from '@components/ModalWindow/ModalWindow';
+import './style.scss';
 
 type ConfirmDialogProps = {
   isOpen: boolean;
@@ -11,9 +12,13 @@ const DeleteDialog: FC<ConfirmDialogProps> = ({ isOpen, onClose, onSubmit }) => 
   return (
     <ModalWindow isOpen={isOpen} onClose={onClose} title="Delete user">
       <p>Are you sure you want to delete this user?</p>
-      <div>
-        <button onClick={onSubmit}>Delete</button>
-        <button onClick={onClose}>Cancel</button>
+      <div className="delete-dialog__buttons">
+        <button className="delete-dialog__cancel-btn" onClick={onClose}>
+          Cancel
+        </button>
+        <button className="delete-dialog__delete-btn" onClick={onSubmit}>
+          Delete
+        </button>
       </div>
     </ModalWindow>
   );

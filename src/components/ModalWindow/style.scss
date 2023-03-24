@@ -1,34 +1,41 @@
-.modal__wrapper {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  animation: appear 0.2s ease-in;
-  background-color: rgba(0, 0, 0, 0.5);
-}
+.modal-window {
+  &__wrapper {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    animation: appear 0.2s ease-in;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
 
-.modal__window {
-  background-color: #fff;
-  padding: 1rem;
-  border-radius: 0.5rem;
-}
+  &__window {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+  }
+  &__title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0 0 1rem;
+  }
 
-.transition {
-  transition-property: all;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 0.3s;
-}
+  &__transition {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 0.3s;
+  }
 
-.transition__from {
-  opacity: 0;
-  transform: scale(0.95);
-}
+  &__transition-from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
 
-.transition__to {
-  opacity: 100;
-  transform: scale(1);
+  &__transition-to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes appear {
@@ -36,6 +43,6 @@
     opacity: 0;
   }
   to {
-    opacity: 100;
+    opacity: 1;
   }
 }

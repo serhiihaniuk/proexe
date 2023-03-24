@@ -1,6 +1,7 @@
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import { columns } from './TableService';
 import { FC } from 'react';
+import './style.scss';
 
 type TableProps = {
   tableData: User[];
@@ -16,13 +17,13 @@ const Table: FC<TableProps> = ({ tableData, onDelete, onEdit }) => {
   });
 
   return (
-    <div className="p-2">
-      <table>
-        <thead>
+    <div className="table-wrapper">
+      <table className="table">
+        <thead className="table__head">
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr key={headerGroup.id} className="table__head-row">
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th key={header.id} className="table__head-cell">
                   {header.isPlaceholder
                     ? null
                     : flexRender(header.column.columnDef.header, header.getContext())}
@@ -31,11 +32,11 @@ const Table: FC<TableProps> = ({ tableData, onDelete, onEdit }) => {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className="table__body">
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className="table__row">
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <td key={cell.id} className="table__cell">
                   {flexRender(cell.column.columnDef.cell, {
                     ...cell.getContext(),
                     edit: () => onEdit(row.original),
@@ -47,7 +48,7 @@ const Table: FC<TableProps> = ({ tableData, onDelete, onEdit }) => {
           ))}
         </tbody>
       </table>
-      <div className="h-4" />
+      <div className="table__spacer" />
     </div>
   );
 };

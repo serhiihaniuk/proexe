@@ -17,7 +17,7 @@ export const columns = [
   columnHelper.accessor('email', {
     header: () => <span>Visits</span>
   }),
-  columnHelper.accessor((row) => row.address.city, {
+  columnHelper.accessor((row) => row.address?.city, {
     id: 'city',
     cell: (info) => <i>{info.getValue()}</i>,
     header: () => <span>City</span>
@@ -25,14 +25,14 @@ export const columns = [
   columnHelper.display({
     id: 'edit',
     cell: (info: unknown) => {
-      return <button onClick={(info as { edit: () => void }).edit}>edit</button>;
+      return <button className="table__button table__button--edit" onClick={(info as { edit: () => void }).edit}>edit</button>;
     },
     header: () => <span>Edit</span>
   }),
   columnHelper.display({
     id: 'delete',
     cell: (info: unknown) => {
-      return <button onClick={(info as { delete: () => void }).delete}>Delete</button>;
+      return <button className="table__button table__button--delete" onClick={(info as { delete: () => void }).delete}>Delete</button>;
     },
     header: () => <span>Delete</span>
   })

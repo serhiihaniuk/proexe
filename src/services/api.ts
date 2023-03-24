@@ -25,6 +25,30 @@ const updateUser = async (user: User): Promise<User> => {
   return user;
 };
 
+const addUser = async (user: User): Promise<User> => {
+  try {
+    await userDataApi.post(`/data/`, {
+      body: user
+    });
+  } catch (e) {
+    console.error(e);
+  }
+
+  return user;
+};
+
+const addUserCacheHandler = (user: User, client: QueryClient) => {
+  const prevUserList = client.getQueryData<User[]>(['users']);
+  const lastID = prevUserList?.at(-1)?.id || 10;
+  user.id = lastID + 1;
+
+  if (!prevUserList) return [user];
+
+  const newUserList = [...prevUserList, user];
+
+  client.setQueryData(['users'], newUserList);
+};
+
 const updateUserCacheHandler = (user: User, client: QueryClient) => {
   const prevUserList = client.getQueryData<User[]>(['users']);
 
@@ -61,5 +85,7 @@ export default {
   deleteUser,
   updateUserCacheHandler,
   updateUser,
-  getUsers
+  getUsers,
+  addUser,
+  addUserCacheHandler
 };
