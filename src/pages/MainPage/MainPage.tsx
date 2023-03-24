@@ -44,9 +44,9 @@ const MainPage = () => {
 
   return (
     <div className="main-page">
-      <button className="main-page__add-user-btn" onClick={addUserHandler}>
+      <div className="main-page__header-wrapper"><h1>Dashboard</h1><button className="main-page__add-user-btn" onClick={addUserHandler}>
         Add new user
-      </button>
+      </button></div>
       <Table tableData={getUsers.data} onDelete={onDelete} onEdit={editUserHandler} />
       <DeleteDialog
         isOpen={isDeleteDialogOpen}

@@ -15,6 +15,8 @@ const Table: FC<TableProps> = ({ tableData, onDelete, onEdit }) => {
     columns,
     getCoreRowModel: getCoreRowModel()
   });
+  
+  if(!tableData.length) return <h2>User data is empty</h2>
 
   return (
     <div className="table-wrapper">

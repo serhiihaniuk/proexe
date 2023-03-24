@@ -11,11 +11,11 @@ export const columns = [
     header: () => <span>Name</span>
   }),
   columnHelper.accessor('username', {
-    header: () => 'username',
+    header: () => 'Username',
     cell: (info) => info.renderValue()
   }),
   columnHelper.accessor('email', {
-    header: () => <span>Visits</span>
+    header: () => <span>Email</span>
   }),
   columnHelper.accessor((row) => row.address?.city, {
     id: 'city',
@@ -25,7 +25,7 @@ export const columns = [
   columnHelper.display({
     id: 'edit',
     cell: (info: unknown) => {
-      return <button className="table__button table__button--edit" onClick={(info as { edit: () => void }).edit}>edit</button>;
+      return <button className="table__button table__button--edit" onClick={(info as { edit: () => void }).edit}>Edit</button>;
     },
     header: () => <span>Edit</span>
   }),

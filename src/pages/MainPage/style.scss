@@ -3,11 +3,21 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  &__header-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 5rem;
+  }
+  h1 {
+    font-size: 2rem;
+  }
   &__add-user-btn {
     max-width: 200px;
     padding: 0.5rem 1rem;
-    margin: 2rem;
     font-size: 0.875rem;
+    margin-left: auto;
     color: #fff;
     background-color: #007bff;
     border: none;
