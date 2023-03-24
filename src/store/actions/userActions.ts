@@ -1,7 +1,3 @@
-import { store } from '../index';
-import { bindActionCreators } from 'redux';
-
-
 export const USER_ACTIONS = {
   SET_USER: 'SET_USER',
   UNSET_USER: 'UNSET_USER'
