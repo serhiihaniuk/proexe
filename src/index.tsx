@@ -13,7 +13,6 @@ root.render(
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <App />
-        {/*<ReactQueryDevtools initialIsOpen />*/}
       </QueryClientProvider>
     </Provider>
   </BrowserRouter>

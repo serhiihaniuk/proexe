@@ -5,36 +5,36 @@ const userDataApi = axios.create({
   baseURL: 'https://my-json-server.typicode.com/karolkproexe/jsonplaceholderdb'
 });
 
-const getUsers = async ({ signal }: QueryFunctionContext<string[]>): Promise<User[]> => {
-  const response = await userDataApi.get(`/data`, {
-    signal
-  });
+const apiRequest = async (method: string, endpoint: string, data?: unknown) => {
+  try {
+    const response = await userDataApi({
+      method,
+      url: endpoint,
+      data
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  return response.data || [];
+const getUsers = async ({ signal }: QueryFunctionContext<string[]>): Promise<User[]> => {
+  return apiRequest('get', `/data`, { signal }) || [];
 };
 
 const updateUser = async (user: User): Promise<User> => {
-  try {
-    await userDataApi.patch(`/data/${user.id}`, {
-      body: user
-    });
-  } catch (e) {
-    console.error(e);
-  }
-
+  await apiRequest('patch', `/data/${user.id}`, user);
   return user;
 };
 
 const addUser = async (user: User): Promise<User> => {
-  try {
-    await userDataApi.post(`/data/`, {
-      body: user
-    });
-  } catch (e) {
-    console.error(e);
-  }
-
+  await apiRequest('post', `/data/`, user);
   return user;
+};
+
+const deleteUser = async (id: number): Promise<number> => {
+  await apiRequest('delete', `/data/${id}`);
+  return id;
 };
 
 const addUserCacheHandler = (user: User, client: QueryClient) => {
@@ -53,22 +53,9 @@ const updateUserCacheHandler = (user: User, client: QueryClient) => {
   const prevUserList = client.getQueryData<User[]>(['users']);
 
   if (!prevUserList) return;
-  const newUserList = prevUserList.map((u) => {
-    if (u.id === user.id) return user;
-    return u;
-  });
+  const newUserList = prevUserList.map((u) => (u.id === user.id ? user : u));
 
   client.setQueryData(['users'], newUserList);
-};
-
-const deleteUser = async (id: number): Promise<number> => {
-  try {
-    await userDataApi.delete(`/data/${id}`);
-  } catch (e) {
-    console.error(e);
-  }
-
-  return id;
 };
 
 const deleteUserCacheHandler = (id: number, client: QueryClient) => {

@@ -15,7 +15,7 @@ const MainPage = () => {
   const isDeleteDialogOpen = Boolean(userID);
   const { getUsers, deleteUser } = useUserMutation();
 
-  const onDelete = useCallback(
+  const initDeletion = useCallback(
     (id: number) => {
       setSearchParams({ id: String(id) });
     },
@@ -50,7 +50,7 @@ const MainPage = () => {
           Add new user
         </button>
       </div>
-      <Table tableData={getUsers.data} onDelete={onDelete} onEdit={editUserHandler} />
+      <Table tableData={getUsers.data} onDelete={initDeletion} onEdit={editUserHandler} />
       <DeleteDialog
         isOpen={isDeleteDialogOpen}
         onClose={() => setSearchParams({})}
