@@ -10,7 +10,7 @@ const getUsers = async ({ signal }: QueryFunctionContext<string[]>): Promise<Use
     signal
   });
 
-  return response.data;
+  return response.data || [];
 };
 
 const updateUser = async (user: User): Promise<User> => {
